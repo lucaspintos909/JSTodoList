@@ -1,4 +1,5 @@
 import AddTodo from "./components/addTodo.js";
+import Modal from "./components/modal.js";
 
 export default class View {
   constructor() {
@@ -9,6 +10,8 @@ export default class View {
     this.addTodoForm.onClick(({ title, description }) => {
       this.addTodo({ title, description });
     });
+
+    this.modal = new Modal();
   }
 
   render() {
@@ -42,13 +45,8 @@ export default class View {
     row.innerHTML = `
       <td>${title}</td>
       <td>${description}</td>
-      <td class="text-center">
-      </td>
-      <td class="text-center">
-        <button class="btn btn-primary mb-1">
-          <i class="fa fa-pencil"></i>
-        </button>
-      </td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
     `;
 
     const checkbox = document.createElement("input");
@@ -57,13 +55,16 @@ export default class View {
     checkbox.onclick = () => this.toggleCompleted(id);
     row.children[2].appendChild(checkbox);
 
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("btn", "btn-primary", "mb-1");
+    editBtn.innerHTML = '<i class="fa fa-pencil"></i>';
+    editBtn.onclick = () => this.removeTodo(id);
+    row.children[3].appendChild(editBtn);
+
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("btn", "btn-danger", "mb-1", "ml-1");
     removeBtn.innerHTML = '<i class="fa fa-trash"></i>';
-    removeBtn.onclick = () => {
-      this.removeTodo(id);
-    };
-
+    removeBtn.onclick = () => this.removeTodo(id);
     row.children[3].appendChild(removeBtn);
   }
 }
