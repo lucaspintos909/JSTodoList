@@ -17,6 +17,7 @@ export default class AddTodo {
           title: this.title.value,
           description: this.description.value,
         });
+        this.alert.hide();
       }
     };
   }
