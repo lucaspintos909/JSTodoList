@@ -21,7 +21,11 @@ export default class Model {
       completed: false,
     };
     this.todos.push(todo);
-
     return { ...todo };
+  }
+
+  removeTodo(id) {
+    const index = this.todos.findIndex((todo) => todo.id === id);
+    this.todos.splice(index, 1);
   }
 }
