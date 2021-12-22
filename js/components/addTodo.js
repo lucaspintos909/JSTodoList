@@ -10,8 +10,8 @@ export default class AddTodo {
 
   onClick(callback) {
     this.btn.onclick = () => {
-      if (title.value === "" || description.value === "") {
-        this.alert.show("Title and description are required!");
+      if (this.title.value === "" || this.description.value === "") {
+        this.alert.show("¡El titulo y la descripción son requeridos!");
       } else {
         callback({
           title: this.title.value,
