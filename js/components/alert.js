@@ -3,10 +3,12 @@ export default class Alert {
     this.alert = document.getElementById(alertId);
   }
 
-  show(message){
+  show(message) {
     this.alert.classList.remove("d-none");
     this.alert.innerText = message;
   }
 
-  hide(){}
+  hide() {
+    this.alert.classList.add("d-none");
+  }
 }
