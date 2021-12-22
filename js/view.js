@@ -11,6 +11,11 @@ export default class View {
     });
   }
 
+  render() {
+    const todos = this.model.getTodos();
+    todos.forEach((todo) => this.createRow(todo));
+  }
+
   setModel(model) {
     this.model = model;
   }
@@ -20,7 +25,7 @@ export default class View {
     this.createRow(todo);
   }
 
-  toggleCompleted(id){
+  toggleCompleted(id) {
     this.model.toggleCompleted(id);
   }
 
@@ -39,7 +44,7 @@ export default class View {
       <td>${description}</td>
       <td class="text-center">
       </td>
-      <td class="text-right">
+      <td class="text-center">
         <button class="btn btn-primary mb-1">
           <i class="fa fa-pencil"></i>
         </button>
