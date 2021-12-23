@@ -6,12 +6,15 @@ export default class View {
     this.model = null;
     this.table = document.getElementById("table");
     this.addTodoForm = new AddTodo();
+    this.modal = new Modal();
 
     this.addTodoForm.onClick(({ title, description }) => {
       this.addTodo({ title, description });
     });
 
-    this.modal = new Modal();
+    this.modal.onClick(({ id, title, description, completed }) => {
+      this.editTodo({ id, title, description, completed });
+    });
   }
 
   render() {
@@ -26,6 +29,15 @@ export default class View {
   addTodo({ title, description }) {
     const todo = this.model.addTodo({ title, description });
     this.createRow(todo);
+  }
+
+  editTodo({ id, title, description, completed }) {
+    this.model.editTodo({ id, title, description, completed });
+
+    const row = document.getElementById(id);
+    row.children[0].innerText = title;
+    row.children[1].innerText = description;
+    row.children[2].children[0].checked = completed;
   }
 
   toggleCompleted(id) {
@@ -58,7 +70,16 @@ export default class View {
     const editBtn = document.createElement("button");
     editBtn.classList.add("btn", "btn-primary", "mb-1");
     editBtn.innerHTML = '<i class="fa fa-pencil"></i>';
-    editBtn.onclick = () => this.removeTodo(id);
+    editBtn.setAttribute("data-toggle", "modal");
+    editBtn.setAttribute("data-target", "#modal");
+    editBtn.onclick = () => {
+      return this.modal.setValues({
+        id,
+        title: row.children[0].innerText,
+        description: row.children[1].innerText,
+        completed: row.children[2].children[0].checked,
+      });
+    };
     row.children[3].appendChild(editBtn);
 
     const removeBtn = document.createElement("button");
