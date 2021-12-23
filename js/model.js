@@ -7,8 +7,8 @@ export default class Model {
       this.todos = [
         {
           id: 0,
-          title: "Example",
-          description: "Task description",
+          title: "Ejemplo",
+          description: "Descripcion de tarea",
           completed: false,
         },
       ];
@@ -28,7 +28,7 @@ export default class Model {
   }
 
   getTodos() {
-    return this.todos;
+    return this.todos.map((todo) => ({...todo}));
   }
 
   findTodoById(id) {
@@ -47,6 +47,19 @@ export default class Model {
     this.save();
 
     return { ...todo };
+  }
+
+  editTodo({ id, title, description, completed }){
+    const index = this.findTodoById(id);
+    const todo = this.todos[index];
+
+    todo.title = title;
+    todo.description = description;
+    todo.completed = completed;
+
+    console.log(this.todos);
+
+    this.save();
   }
 
   removeTodo(id) {
