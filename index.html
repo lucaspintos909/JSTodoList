@@ -43,18 +43,17 @@
         </ul>
         <form class="form-inline my-2 my-lg-0" id="filters">
         <label class="font-weight-bold text-info mr-3">Filtros</label>
-        <input type="radio" name="all" value="all" class="mx-1">
-        <label for="all" class="mb-0">Todos</label>
-        <input type="radio" name="completed" value="completed" class="mx-1">
-        <label for="completed" class="mb-0">Completados</label>
-        <input type="radio" name="uncompleted" value="uncompleted" class="mx-1">
-        <label for="uncompleted" class="mr-2 mb-0">Por hacer</label> 
+        <input id="check-all" type="radio" name="type" value="all" class="mx-1" checked>
+        <label for="check-all" class="mb-0">Todos</label>
+        <input id="check-completed" type="radio" name="type" value="completed" class="mx-1">
+        <label for="check-completed" class="mb-0">Completados</label>
+        <input id="check-uncompleted" type="radio" name="type" value="uncompleted" class="mx-1">
+        <label for="check-uncompleted" class="mr-2 mb-0">Por hacer</label> 
 
         <input
           class="form-control mr-sm-2"
           type="search"
           name="words"
-          placeholder="Words"
           aria-label="Search"
         >
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="search">
