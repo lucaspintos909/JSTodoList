@@ -1,5 +1,6 @@
 import AddTodo from "./components/addTodo.js";
 import Modal from "./components/modal.js";
+import Filters from "./components/filters.js";
 
 export default class View {
   constructor() {
@@ -7,14 +8,17 @@ export default class View {
     this.table = document.getElementById("table");
     this.addTodoForm = new AddTodo();
     this.modal = new Modal();
+    this.filters = new Filters();
 
-    this.addTodoForm.onClick(({ title, description }) => {
-      this.addTodo({ title, description });
-    });
+    this.addTodoForm.onClick(({ title, description }) =>
+      this.addTodo({ title, description })
+    );
 
-    this.modal.onClick(({ id, title, description, completed }) => {
-      this.editTodo({ id, title, description, completed });
-    });
+    this.modal.onClick(({ id, title, description, completed }) =>
+      this.editTodo({ id, title, description, completed })
+    );
+
+    this.filters.onClick((filters) => this.filter(filters));
   }
 
   render() {
@@ -24,6 +28,33 @@ export default class View {
 
   setModel(model) {
     this.model = model;
+  }
+
+  filter({ type, words }) {
+    const [, ...rows] = this.table.getElementsByTagName("tr");
+    for (const row of rows) {
+      const [title, description, completed] = row.children;
+      let shouldHide = false;
+
+      if (words) {
+        shouldHide =
+          !title.innerText.includes(words) &&
+          !description.innerText.includes(words);
+      }
+
+      const shouldBeCompleted = type === "completed";
+      const isCompleted = completed.children[0].checked;
+
+      if (type !== "all" && shouldBeCompleted !== isCompleted) {
+        shouldHide = true;
+      }
+
+      if(shouldHide){
+        row.classList.add('d-none');
+      }else{
+        row.classList.remove('d-none');
+      }
+    }
   }
 
   addTodo({ title, description }) {
